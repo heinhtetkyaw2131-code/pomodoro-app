@@ -100,10 +100,10 @@ function App() {
     }
     intervalRef.current = setInterval(() => {
       setTime((prev) => {
-        localStorage.setItem("timeLeft", JSON.stringify(prev));
+        localStorage.setItem("timeLeft", JSON.stringify(prev - 1));
         return prev - 1;
       });
-    }, 10);
+    }, 1000);
   };
 
   const pauseTimer = () => {
@@ -113,7 +113,10 @@ function App() {
 
   const resetTimer = () => {
     pauseTimer();
-    setTime(settings[phase]);
+    setTime(() => {
+      localStorage.clear();
+      return settings[phase];
+    });
   };
 
   const toggle = () => {
@@ -125,11 +128,10 @@ function App() {
   };
 
   const reset = () => {
-    localStorage.removeItem("phase");
-    localStorage.removeItem("settings");
-    localStorage.removeItem("timeLeft");
-    localStorage.removeItem("counter");
-    localStorage.removeItem("cycle");
+    localStorage.clear();
+    setSettings(settings);
+    setPhase('work');
+    setCounter(settings[phase]);
   };
 
   const remTime = () => {
