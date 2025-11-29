@@ -139,7 +139,7 @@ function App() {
   };
 
   return (
-    <div className="main-container">
+    <div className="main-container dd">
       <audio ref={audioRef} src={beep} />
       <MainSection
         {...{
